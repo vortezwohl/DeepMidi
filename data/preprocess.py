@@ -26,7 +26,7 @@ def download(url: str, filename: str, interval: int = 0) -> str:
 
 def analyse_midi(filename: str, freq: bool = False, mode: str = 'note') -> tuple[str, list | None]:
     def convert_name(_note: str):
-        return _note.replace('-flat', 'b').replace('-sharp', '#').replace('in octave', '_').replace(' ', '')
+        return _note.replace('-flat', 'b').replace('-sharp', '#').replace('in octave', '').replace(' ', '')
     res = []
     try:
         s = converter.parse(filename)
