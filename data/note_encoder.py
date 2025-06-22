@@ -2,7 +2,7 @@ def encode(note: str) -> int:
     note, octave = note.split('_', 1)
     octave = int(octave)
     note_offset = 0
-    note_code = 1
+    note_code = 0
     if len(note) == 2:
         match note[1]:
             case 'b':
@@ -23,13 +23,13 @@ def encode(note: str) -> int:
         case 'a':
             note_code = 9
         case 'b':
-            note_code = 11
-    return note_code + 12 * octave + note_offset + 1
+            note_code = 12
+    return note_code + 12 * octave + note_offset
 
 
-def decode(midi_note: int, use_flat_key: bool = False) -> str:
-    octave = midi_note // 12
-    note_value = midi_note % 12
+def decode(note: int, use_flat_key: bool = False) -> str:
+    octave = note // 12
+    note_value = note % 12
     note_names_sharp = 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'
     note_names_flat = 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'
     note_names = note_names_flat if use_flat_key else note_names_sharp
@@ -38,6 +38,10 @@ def decode(midi_note: int, use_flat_key: bool = False) -> str:
 
 # todo debug
 if __name__ == '__main__':
-    code = encode('C#_0')
-    note = decode(code, use_flat_key=False)
-    print(code, note)
+    for _note in 'b'.upper():
+        for octave in range(10):
+            note = f'{_note}_{octave}'
+            _tmp_note = note
+            code = encode(_tmp_note)
+            _decode = decode(code, use_flat_key=False)
+            print('code', code, 'note', _tmp_note, 'decode', _decode, 'correct', _tmp_note == _decode)
