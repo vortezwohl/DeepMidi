@@ -53,6 +53,6 @@ def analyse_midi(filename: str, freq: bool = False, mode: str = 'note') -> tuple
 def analyse_all_midi(path: str, freq: bool = False, mode: str = 'note') -> list:
     workers = ThreadPool(64)
     files = get_files(path)
-    inputs = zip(files, [freq] * len(files), [mode] * len(files))
-    results = workers.gather([analyse_midi] * len(inputs), inputs)
-    return [(filename, midi) for filename, midi in results]
+    inputs = list(zip(files, [freq] * len(files), [mode] * len(files)))
+    results = [x[2] for x in workers.gather([analyse_midi] * len(files), inputs)]
+    return [x for x in results]

@@ -194,3 +194,4 @@ cython_debug/
 .cursorindexingignore
 data/midi-classical-music
 data/drengskapur___midi-classical-music
+*.whl

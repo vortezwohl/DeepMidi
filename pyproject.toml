@@ -10,6 +10,7 @@ dependencies = [
     "jupyter>=1.1.1",
     "mido>=1.3.3",
     "music21>=9.7.1",
+    "pip>=25.1.1",
     "requests>=2.32.4",
     "vortezwohl>=0.0.2",
 ]
