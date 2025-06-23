@@ -10,9 +10,5 @@ def encode(note: int) -> torch.Tensor:
 
 
 def decode(note: torch.Tensor) -> int:
-    idx = 0
-    for d in note:
-        if d:
-            return idx
-        idx += 1
-    return -1
+    return torch.argmax(note, dim=-1).item()
+

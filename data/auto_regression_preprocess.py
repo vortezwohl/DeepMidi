@@ -1,4 +1,5 @@
 import torch
+from torch.utils.data import DataLoader, TensorDataset
 
 
 def auto_regression_preprocess(tensor_list: list[torch.Tensor], n_gram: int):
@@ -19,3 +20,13 @@ def auto_regression_preprocess(tensor_list: list[torch.Tensor], n_gram: int):
     x = torch.stack(x_list)
     y = torch.stack(y_list)
     return x, y
+
+
+def get_auto_regression_dataset_loaders(x: torch.Tensor, y: torch.Tensor, train_ratio: float = 0.95, batch_size: int = 16) -> tuple[DataLoader, DataLoader]:
+    dataset_size = len(y)
+    train_size = int(train_ratio * dataset_size)
+    train_dataset = TensorDataset(x[:train_size], y[:train_size])
+    valid_dataset = TensorDataset(x[train_size:], y[train_size:])
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+    valid_loader = DataLoader(valid_dataset, batch_size=batch_size, shuffle=True)
+    return train_loader, valid_loader
