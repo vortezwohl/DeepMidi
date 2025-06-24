@@ -29,8 +29,14 @@ def generate(notes: list[str], top_k: int, max_notes: int) -> str:
 
 
 if __name__ == '__main__':
+    from test.sound import play_midi_with_pygame, generate_midi_file
+    midi_file = './test_data_output/tmp.mid'
     note_seq = ['C_5', 'E_5', 'A_5', 'C_6']
     print('Input notes:', ', '.join(note_seq))
     print('Generated notes:', end=' ')
-    for note in generate(note_seq, 4, 8):
-        print(note, end=', ')
+    # for note in generate(note_seq, 4, 100):
+    #     print(note, end=', ')
+    gen_notes = list(generate(note_seq, 2, 512))
+    print(', '.join(gen_notes))
+    generate_midi_file([d_encode(x) for x in note_seq + gen_notes], midi_file)
+    play_midi_with_pygame(midi_file)
